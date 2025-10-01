@@ -44,7 +44,7 @@
   /* ===== Cadre PNG perso (9-slice) ===== */
   --frame-url: url("https://i.ibb.co/qLDf3JBX/textbox-Image-Opaque.png");
   --frame-slice: 8;       /* mesuré sur le PNG */
-  --frame-width: 16px;    /* 8 / 16 / 24 / 32… => net */
+  --frame-width: 8px;    /* 8 / 16 / 24 / 32… => net */
   --frame-repeat: stretch;/* stretch | round */
   --bubble-bg: #180c1e;   /* fond interne de la bulle (violet très sombre) */
 }
@@ -126,9 +126,6 @@ body {
 .hl-message.border-24 { --frame-width: 24px; }
 
 /* astérisque “* ” avant chaque texte de message */
-.hl-message::before {
-  content: "* ";
-}
 
 /* ================ 7. Conteneur de chaque ligne ==== */
 .highlight-chat {
