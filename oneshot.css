@@ -1,0 +1,264 @@
+/* ================ 0. Vos styles de base existants ================= */
+
+/* Bubbles transparentes */
+.odd:not(.expand) {
+    background-color: transparent;
+}
+
+/* Affichage du chat en mode non-compact */
+.notcompactmode .highlight-chat {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: 90vw !important;
+}
+
+/* Empêche la bordure droite d’être rognée */
+#output{
+    padding-right:8px !important;   /* correctif de bordure */
+    display:grid !important;
+    justify-items:start;             /* ne plus étirer les items */
+}
+
+/* Cache l’heure d’arrivée */
+.time-arrived {
+    display: none;
+}
+
+/* ================ 1. Police OMORI ================ */
+@font-face {
+  font-family: 'OMORI';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://imsakushi.github.io/psd-analytics/TerminusTTFWindows.woff2') format('woff2');
+}
+
+/* ================ 2. Base ========================= */
+:root {
+  --background-color: transparent;
+  --menu-background-color: transparent;
+  --highlight-base: transparent;
+  --highlight-base2: transparent;
+  --highlight-compact: transparent;
+  --highlight-compact2: transparent;
+
+  /* ===== Cadre PNG perso (9-slice) ===== */
+  --frame-url: url("https://i.ibb.co/qLDf3JBX/textbox-Image-Opaque.png");
+  --frame-slice: 8;       /* mesuré sur le PNG */
+  --frame-width: 16px;    /* 8 / 16 / 24 / 32… => net */
+  --frame-repeat: stretch;/* stretch | round */
+  --bubble-bg: #180c1e;   /* fond interne de la bulle (violet très sombre) */
+}
+
+body {
+  background: rgba(0,0,0,0) !important;          /* overlay totalement transparent */
+  font-family: "OMORI", sans-serif !important;   /* police OMORI partout */
+  overflow: hidden;                              /* masque la scrollbar */
+}
+
+/* Désactive la barre de menu SocialStream */
+#menu {
+  display: none !important;
+}
+
+/* ================ 3. Avatar & badges cachés ====== */
+.hl-profile-pic,
+.hl-leftside,
+.hl-badge,
+.hl-badges,
+.avatar-badge {
+  display: none !important;
+}
+
+/* ================ 4. Styles communs texte ========= */
+.hl-name,
+.hl-message,
+.hl-name *,
+.hl-message * {
+  text-shadow:
+    -2px -2px #000, -2px -1px #000, -2px 0px #000, -2px 1px #000, -2px 2px #000,
+    -1px -2px #000, -1px -1px #000, -1px 0px #000, -1px 1px #000, -1px 2px #000,
+     0px -2px #000,  0px -1px #000,  0px 0px #000,  0px 1px #000,  0px 2px #000,
+     1px -2px #000,  1px -1px #000,  1px 0px #000,  1px 1px #000,  1px 2px #000,
+     2px -2px #000,  2px -1px #000,  2px 0px #000,  2px 1px #000,  2px 2px #000;
+}
+
+/* ================ 5. Nom de l’auteur ============= */
+.hl-name {
+  display: block !important;
+  color: #f4f4f4 !important;
+  font-size: 30px !important;
+  line-height: 22px !important;
+  padding: 8px !important;
+  margin: 0 !important;
+}
+
+/* ================ 6. Message ====================== */
+.hl-message {
+  display: block !important;
+  color: #ffffff !important;
+  font-size: 29px !important;
+  line-height: normal !important;
+  letter-spacing: normal !important;
+
+  /* espacements internes/externes */
+  padding: 8px !important;
+  margin: 8px 0 12px 0 !important;
+
+  /* ====== Fond + Cadre PNG 9-slice ====== */
+  background: var(--bubble-bg) !important;    /* fond au centre */
+  border-style: solid !important;
+  border-color: transparent !important;
+  border-width: var(--frame-width) !important;
+
+  -webkit-border-image: var(--frame-url) var(--frame-slice) var(--frame-repeat);
+          border-image: var(--frame-url) var(--frame-slice) var(--frame-repeat);
+
+  /* pixels nets quand on scale */
+  image-rendering: pixelated;
+
+  /* pour pouvoir positionner une éventuelle queue en ::after */
+  position: relative;
+}
+
+/* variantes d’épaisseur si besoin (applique .border-8/16/24 sur l’élément) */
+.hl-message.border-8  { --frame-width: 8px;  }
+.hl-message.border-16 { --frame-width: 16px; }
+.hl-message.border-24 { --frame-width: 24px; }
+
+/* astérisque “* ” avant chaque texte de message */
+.hl-message::before {
+  content: "* ";
+}
+
+/* ================ 7. Conteneur de chaque ligne ==== */
+.highlight-chat {
+  background: transparent !important;   /* on garde uniquement les bulles */
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ================ 8. Divers ======================= */
+/* Cache la timeline “pinned” si tu ne l’utilises pas */
+#pinned {
+  display: none !important;
+}
+
+/* ================ 9. Animation d’apparition ========= */
+@keyframes slideInFromLeft {
+  0%   { opacity: 0; transform: translateX(-50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.highlight-chat {
+  animation: slideInFromLeft 0.3s ease-out forwards;
+}
+
+/* ============== Correctif « bulle trop large » ============== */
+.highlight-chat{
+  display:inline-block !important;   /* shrink-wrap */
+  width:auto !important;
+  max-width:90vw !important;         /* sécurité écran */
+}
+/* Nom de l’auteur : bloc complet */
+.hl-name{
+  display:block !important;          /* force retour à la ligne      */
+  min-width:0 !important;            /* plus de 135 px imposés       */
+  margin:0 !important;               /* propre                       */
+}
+/* Message : bloc complet juste en dessous */
+.hl-message{
+  display:block !important;          /* ligne suivante               */
+  margin-left:0 !important;          /* aligné au bord de la bulle   */
+}
+
+/* ============================================================
+   10) ICÔNE DE PLATEFORME À DROITE DU PSEUDO (personnalisée)
+   ============================================================ */
+
+/* 10.1 — Masquer l’icône native */
+.icon.hl-source-type { display: none !important; }
+
+/* 10.2 — Ligne du nom avec une place pour l’icône à droite */
+.hl-name{
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 10.3 — Icône personnalisée à droite du nom */
+.hl-name::after{
+  content: "";
+  width: var(--ss-icon-size, 0px);
+  height: var(--ss-icon-size, 0px);
+  background-image: var(--ss-platform-icon, none);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  image-rendering: auto;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 0 2px #000) drop-shadow(0 0 1px #000);
+}
+
+/* 10.4 — Détection plateforme + assignation des PNG perso */
+.highlight-chat:has(.icon.hl-source-type[data-icon-name="youtube" i]),
+.highlight-chat:has(.icon.hl-source-type[src*="youtube"]),
+.highlight-chat:has(.icon.hl-source-type[title*="youtube" i]),
+.highlight-chat:has(.icon.hl-source-type[class*="youtube" i]),
+.highlight-chat.youtube {
+  --ss-platform-icon: url("https://i.imgur.com/1Zb5QqS.png");
+  --ss-icon-size: 28px;
+}
+
+.highlight-chat:has(.icon.hl-source-type[data-icon-name="twitch" i]),
+.highlight-chat:has(.icon.hl-source-type[src*="twitch"]),
+.highlight-chat:has(.icon.hl-source-type[title*="twitch" i]),
+.highlight-chat:has(.icon.hl-source-type[class*="twitch" i]),
+.highlight-chat.twitch {
+  --ss-platform-icon: url("https://i.imgur.com/uWKDTpP.png");
+  --ss-icon-size: 26px;
+}
+
+.highlight-chat:has(.icon.hl-source-type[data-icon-name="tiktok" i]),
+.highlight-chat:has(.icon.hl-source-type[src*="tiktok"]),
+.highlight-chat:has(.icon.hl-source-type[title*="tiktok" i]),
+.highlight-chat:has(.icon.hl-source-type[class*="tiktok" i]),
+.highlight-chat.tiktok {
+  --ss-platform-icon: url("https://i.imgur.com/9WP1GG8.png");
+  --ss-icon-size: 26px;
+}
+
+/* 10.5 — Mise en page header (nom+icône) au-dessus du message */
+.highlight-chat{
+  display: grid !important;
+  grid-template-columns: auto max-content;
+  grid-auto-rows: auto;
+  align-items: center;
+  column-gap: 8px;
+}
+.hl-name   { grid-column: 1 / 2; }
+.hl-message{ grid-column: 1 / -1; }
+
+/* ================== 11) Option : Queue de bulle ================== */
+/* (décommente pour activer une petite queue carrée style pixel) */
+/*
+.hl-message::after{
+  content:"";
+  position:absolute;
+  left: calc(var(--frame-width) * -0.40);
+  bottom: 16px;
+  width: 14px; height: 14px;
+  background: var(--bubble-bg);
+  transform: rotate(45deg);
+  box-shadow:
+    -1px  0 0 #000,
+     0   -1px 0 #000; 
+}
+*/
+
+/* ================== 12) Responsive (optionnel) =================== */
+@media (max-width: 600px){
+  :root{
+    --frame-width: 12px;  /* cadre un peu plus fin sur mobile */
+  }
+}
