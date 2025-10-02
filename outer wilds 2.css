@@ -1,0 +1,280 @@
+/* ================ 0. Vos styles de base existants ================= */
+
+/* Bubbles transparentes */
+
+.odd:not(.expand) {
+
+background-color: transparent;
+
+}
+
+/* Affichage du chat en mode non-compact */
+
+.notcompactmode .highlight-chat {
+
+/* Adaptation automatique de la taille à la largeur du texte */
+
+display: inline-block !important;
+
+width: auto !important;
+
+max-width: 90vw !important;
+
+}
+
+/* Empêche la bordure droite d’être rognée */
+
+#output{
+
+padding-right:8px !important; /* ton correctif de bordure */
+
+display:grid !important;
+
+justify-items:start; /* ← ne plus étirer les items */
+
+}
+
+/* Cache l’heure d’arrivée */
+
+.time-arrived {
+
+display: none;
+
+}
+
+/* ================ 1. Police OMORI ================ */
+
+@font-face {
+
+font-family: 'OMORI';
+
+font-style: normal;
+
+font-weight: 400;
+
+src: url('https://imsakushi.github.io/psd-analytics/SpaceMono.woff2') format('woff2');
+
+}
+
+/* ================ 2. Base ========================= */
+
+:root {
+
+/* neutralise les anciennes couleurs pour avoir une base neutre */
+
+--background-color: transparent;
+
+--menu-background-color: transparent;
+
+--highlight-base: transparent;
+
+--highlight-base2: transparent;
+
+--highlight-compact: transparent;
+
+--highlight-compact2: transparent;
+
+}
+
+body {
+
+background: rgba(0,0,0,0) !important; /* overlay totalement transparent */
+
+font-family: "OMORI", sans-serif !important; /* police OMORI partout */
+
+overflow: hidden; /* masque la scrollbar */
+
+}
+
+/* Désactive la barre de menu SocialStream */
+
+#menu {
+
+display: none !important;
+
+}
+
+/* ================ 3. Avatar & badges cachés ====== */
+
+.hl-profile-pic,
+
+.hl-leftside,
+
+.hl-badge,
+
+.hl-badges,
+
+.avatar-badge {
+
+display: none !important;
+
+}
+
+/* ================ 4. Styles communs texte ========= */
+
+.hl-name,
+
+.hl-message,
+
+.hl-name *,
+
+.hl-message * {
+
+/* gros contour noir autour de chaque caractère */
+
+text-shadow:
+
+-2px -2px #000, -2px -1px #000, -2px 0px #000, -2px 1px #000, -2px 2px #000,
+
+-1px -2px #000, -1px -1px #000, -1px 0px #000, -1px 1px #000, -1px 2px #000,
+
+0px -2px #000, 0px -1px #000, 0px 0px #000, 0px 1px #000, 0px 2px #000,
+
+1px -2px #000, 1px -1px #000, 1px 0px #000, 1px 1px #000, 1px 2px #000,
+
+2px -2px #000, 2px -1px #000, 2px 0px #000, 2px 1px #000, 2px 2px #000;
+
+}
+
+/* ================ 5. Nom de l’auteur ============= */
+
+.hl-name {
+
+display: block !important;
+
+color: #abecf8 !important;
+
+font-size: 33px !important;
+
+line-height: 22px !important;
+
+padding: 4px !important;
+
+
+margin: 0 !important;
+    
+text-shadow: #000000 0px 0 0px;
+
+}
+
+/* ================ 6. Message ====================== */
+
+.hl-message {
+
+display: block !important;
+
+color: #abecf8 !important;
+
+font-size: 32px !important;
+
+line-height: normal !important;
+
+letter-spacing: normal !important;
+
+padding: 8px !important;
+
+margin: 0 0 16px 0 !important;
+
+background: rgba(0,0,0,0) !important;
+
+text-shadow: #000000 0px 0 0px;
+
+}
+
+/* ================ 7. Conteneur de chaque ligne ==== */
+
+.highlight-chat {
+
+background: transparent !important; /* on garde uniquement les bulles noires */
+
+padding-left: 4px !important;
+
+padding-right: 4px !important;
+
+border: none !important;
+
+box-shadow: none !important;
+
+}
+
+/* ================ 8. Divers ======================= */
+
+/* Cache la timeline “pinned” si tu ne l’utilises pas */
+
+#pinned {
+
+display: none !important;
+
+}
+
+/* Supprime la petite icône de “source” (Twitch/YouTube…) */
+
+.icon.hl-source-type {
+
+display: none !important;
+
+}
+
+/* ================ 9. Animation d’apparition ========= */
+
+@keyframes slideInFromLeft {
+
+0% {
+
+opacity: 0;
+
+transform: translateX(-50px);
+
+}
+
+100% {
+
+opacity: 1;
+
+transform: translateX(0);
+
+}
+
+}
+
+.highlight-chat {
+
+/* chaque bulle glisse depuis la gauche */
+
+animation: slideInFromLeft 0.3s ease-out forwards;
+
+}
+
+/* ============== Correctif « bulle trop large » ============== */
+
+.highlight-chat{
+
+display:inline-block !important; /* shrink‑wrap */
+
+width:auto !important;
+
+max-width:90vw !important; /* sécurité écran */
+
+}
+
+/* 2. Nom de l’auteur : bloc complet */
+
+.hl-name{
+
+display:block !important; /* force retour à la ligne */
+
+min-width:0 !important; /* plus de 135 px imposés */
+
+margin:0 !important; /* propre */
+
+}
+
+/* 3. Message : bloc complet juste en dessous */
+
+.hl-message{
+
+display:block !important; /* ligne suivante */
+
+margin-left:0 !important; /* aligné au bord de la bulle */
+
+}
